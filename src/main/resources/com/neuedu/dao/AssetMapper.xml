@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuedu.dao.AssetMapper">
+  <resultMap id="BaseResultMap" type="com.neuedu.pojo.Asset">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="comtract" jdbcType="INTEGER" property="comtract" />
+    <result column="asset_type" jdbcType="INTEGER" property="assetType" />
+    <result column="config_id" jdbcType="INTEGER" property="configId" />
+    <result column="computerroom" jdbcType="VARCHAR" property="computerroom" />
+    <result column="rack_id" jdbcType="INTEGER" property="rackId" />
+    <result column="rack" jdbcType="VARCHAR" property="rack" />
+    <result column="in_time" jdbcType="TIMESTAMP" property="inTime" />
+    <result column="warranty_time" jdbcType="VARCHAR" property="warrantyTime" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="responsible_by" jdbcType="VARCHAR" property="responsibleBy" />
+    <result column="responsible_person_name" jdbcType="VARCHAR" property="responsiblePersonName" />
+    <result column="responsible_person_phone" jdbcType="VARCHAR" property="responsiblePersonPhone" />
+    <result column="repair_state" jdbcType="INTEGER" property="repairState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, comtract, asset_type, config_id, computerroom, rack_id, rack, in_time, 
+    warranty_time, phone, responsible_by, responsible_person_name, responsible_person_phone, 
+    repair_state
+  </sql>
+  <select id="selectByExample" parameterType="com.neuedu.pojo.AssetExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from asset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from asset
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from asset
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.neuedu.pojo.AssetExample">
+    delete from asset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.neuedu.pojo.Asset">
+    insert into asset (id, name, comtract, 
+      asset_type, config_id, computerroom, 
+      rack_id, rack, in_time, 
+      warranty_time, phone, responsible_by, 
+      responsible_person_name, responsible_person_phone, 
+      repair_state)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{comtract,jdbcType=INTEGER}, 
+      #{assetType,jdbcType=INTEGER}, #{configId,jdbcType=INTEGER}, #{computerroom,jdbcType=VARCHAR}, 
+      #{rackId,jdbcType=INTEGER}, #{rack,jdbcType=VARCHAR}, #{inTime,jdbcType=TIMESTAMP}, 
+      #{warrantyTime,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{responsibleBy,jdbcType=VARCHAR}, 
+      #{responsiblePersonName,jdbcType=VARCHAR}, #{responsiblePersonPhone,jdbcType=VARCHAR}, 
+      #{repairState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neuedu.pojo.Asset">
+    insert into asset
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="comtract != null">
+        comtract,
+      </if>
+      <if test="assetType != null">
+        asset_type,
+      </if>
+      <if test="configId != null">
+        config_id,
+      </if>
+      <if test="computerroom != null">
+        computerroom,
+      </if>
+      <if test="rackId != null">
+        rack_id,
+      </if>
+      <if test="rack != null">
+        rack,
+      </if>
+      <if test="inTime != null">
+        in_time,
+      </if>
+      <if test="warrantyTime != null">
+        warranty_time,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="responsibleBy != null">
+        responsible_by,
+      </if>
+      <if test="responsiblePersonName != null">
+        responsible_person_name,
+      </if>
+      <if test="responsiblePersonPhone != null">
+        responsible_person_phone,
+      </if>
+      <if test="repairState != null">
+        repair_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="comtract != null">
+        #{comtract,jdbcType=INTEGER},
+      </if>
+      <if test="assetType != null">
+        #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="configId != null">
+        #{configId,jdbcType=INTEGER},
+      </if>
+      <if test="computerroom != null">
+        #{computerroom,jdbcType=VARCHAR},
+      </if>
+      <if test="rackId != null">
+        #{rackId,jdbcType=INTEGER},
+      </if>
+      <if test="rack != null">
+        #{rack,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null">
+        #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="warrantyTime != null">
+        #{warrantyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibleBy != null">
+        #{responsibleBy,jdbcType=VARCHAR},
+      </if>
+      <if test="responsiblePersonName != null">
+        #{responsiblePersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="responsiblePersonPhone != null">
+        #{responsiblePersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="repairState != null">
+        #{repairState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.neuedu.pojo.AssetExample" resultType="java.lang.Long">
+    select count(*) from asset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update asset
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comtract != null">
+        comtract = #{record.comtract,jdbcType=INTEGER},
+      </if>
+      <if test="record.assetType != null">
+        asset_type = #{record.assetType,jdbcType=INTEGER},
+      </if>
+      <if test="record.configId != null">
+        config_id = #{record.configId,jdbcType=INTEGER},
+      </if>
+      <if test="record.computerroom != null">
+        computerroom = #{record.computerroom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rackId != null">
+        rack_id = #{record.rackId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rack != null">
+        rack = #{record.rack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inTime != null">
+        in_time = #{record.inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.warrantyTime != null">
+        warranty_time = #{record.warrantyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responsibleBy != null">
+        responsible_by = #{record.responsibleBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responsiblePersonName != null">
+        responsible_person_name = #{record.responsiblePersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responsiblePersonPhone != null">
+        responsible_person_phone = #{record.responsiblePersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairState != null">
+        repair_state = #{record.repairState,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update asset
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      comtract = #{record.comtract,jdbcType=INTEGER},
+      asset_type = #{record.assetType,jdbcType=INTEGER},
+      config_id = #{record.configId,jdbcType=INTEGER},
+      computerroom = #{record.computerroom,jdbcType=VARCHAR},
+      rack_id = #{record.rackId,jdbcType=INTEGER},
+      rack = #{record.rack,jdbcType=VARCHAR},
+      in_time = #{record.inTime,jdbcType=TIMESTAMP},
+      warranty_time = #{record.warrantyTime,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      responsible_by = #{record.responsibleBy,jdbcType=VARCHAR},
+      responsible_person_name = #{record.responsiblePersonName,jdbcType=VARCHAR},
+      responsible_person_phone = #{record.responsiblePersonPhone,jdbcType=VARCHAR},
+      repair_state = #{record.repairState,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neuedu.pojo.Asset">
+    update asset
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="comtract != null">
+        comtract = #{comtract,jdbcType=INTEGER},
+      </if>
+      <if test="assetType != null">
+        asset_type = #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="configId != null">
+        config_id = #{configId,jdbcType=INTEGER},
+      </if>
+      <if test="computerroom != null">
+        computerroom = #{computerroom,jdbcType=VARCHAR},
+      </if>
+      <if test="rackId != null">
+        rack_id = #{rackId,jdbcType=INTEGER},
+      </if>
+      <if test="rack != null">
+        rack = #{rack,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null">
+        in_time = #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="warrantyTime != null">
+        warranty_time = #{warrantyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibleBy != null">
+        responsible_by = #{responsibleBy,jdbcType=VARCHAR},
+      </if>
+      <if test="responsiblePersonName != null">
+        responsible_person_name = #{responsiblePersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="responsiblePersonPhone != null">
+        responsible_person_phone = #{responsiblePersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="repairState != null">
+        repair_state = #{repairState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neuedu.pojo.Asset">
+    update asset
+    set name = #{name,jdbcType=VARCHAR},
+      comtract = #{comtract,jdbcType=INTEGER},
+      asset_type = #{assetType,jdbcType=INTEGER},
+      config_id = #{configId,jdbcType=INTEGER},
+      computerroom = #{computerroom,jdbcType=VARCHAR},
+      rack_id = #{rackId,jdbcType=INTEGER},
+      rack = #{rack,jdbcType=VARCHAR},
+      in_time = #{inTime,jdbcType=TIMESTAMP},
+      warranty_time = #{warrantyTime,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      responsible_by = #{responsibleBy,jdbcType=VARCHAR},
+      responsible_person_name = #{responsiblePersonName,jdbcType=VARCHAR},
+      responsible_person_phone = #{responsiblePersonPhone,jdbcType=VARCHAR},
+      repair_state = #{repairState,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
